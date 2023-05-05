@@ -85,30 +85,33 @@ fs.readFile(csvPath, { encoding: 'utf8' }, function (err, data) {
     var pdfInputPath = poolDir + file;
     var inputPath = processInputDir + flux;
     var targetPath = targetDir + flux
-    
-    
+    var flagFile = targetPath + "/" + flux + ".flag"
+
     if (flux) {
       console.log(`Trying to copy input ${inputPath} to ${targetPath}`);
-      copyDir(inputPath, targetPath);
-      console.log(inputPath  + "/" + flux + ".xml" )
-      fs.copyFile(inputPath  + "/" + flux + ".xml", targetPath + "/" + flux + ".xml", function (err) {
-          if (err) throw err;
-         });
-         fs.copyFile(inputPath  + "/" + flux + ".xml", targetPath + "/" + flux + ".xml", function (err) {
-            if (err) throw err;
-           });
-        }
-        if (file) {
-          console.log("Input pdf " + pdfInputPath);
-          console.log("output pdf " + targetPath + "/" + file);
-          fs.copyFile(pdfInputPath, targetPath + "/" + file, function (err) {
-            if (err) throw err;
-          });
-        }
+      // copyDir(inputPath, targetPath);
+      console.log(inputPath + "/" + flux + ".xml")
+      // fs.copyFile(inputPath + "/" + flux + ".xml", targetPath + "/" + flux + ".xml", function (err) {
+      //   if (err) throw err;
+      // });
+
+      if (file) {
+        console.log("Input pdf " + pdfInputPath);
+        console.log("output pdf " + targetPath + "/" + file);
+        // fs.copyFile(pdfInputPath, targetPath + "/" + file, function (err) {
+        //   if (err) throw err;
+        // });
       }
 
+      fs.writeFile(flagFile, "", (err) => {
+          if (err) {
+            console.log(err);
+          }
+          console.log(`Fichier ${flagFile} crée`);
+        });
 
-
+    }
+  }
   var now = new Date();
 
   console.log(`Temps ecoulé ${(now - today) / 100} sec`);
